@@ -1,0 +1,20 @@
+creazione:	
+php artisan make:migration create_nome_table
+php artisan make:seeder NomeSeeder
+php artisan make:model Nome
+php artisan make:controller Nome
+
+
+migrations:
+php artisan migrate:fresh
+php artisan migrate:fresh --seed
+
+php artisan serv
+
+// all methods
+https://laravel.com/docs/10.x/collections 
+
+git commands
+git add .
+git commit -m "nome commint"
+git push
