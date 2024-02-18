@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Richiesta;
-use Illuminate\Http\Request\input;
+use Illuminate\Support\Facades\DB;
+use PharIo\Manifest\Email;
 
 class RichiestaController extends Controller
 {
@@ -67,24 +68,44 @@ class RichiestaController extends Controller
     public function store(Request $request)
     {
         try {
-            $data = $request->input();
+            // Validazione dei dati del form
+            $validatedData = $request->validate([
+                'email' => 'required|email',
+                'name' => 'required|string|max:255',
+                'surname' => 'required|string|max:255',
+                'telephone' => 'nullable|string|max:20',
+                'city' => 'nullable|string|max:255',
+                'cap' => 'nullable|string|max:10',
+                'description' => 'required|string|max:1024',
+                'budget' => 'required|integer',
 
+                // 'user_id' => 'nullable|default:null',
+                // 'accepted_at' => 'nullable|date|default:1',
+                // 'is_accepted' => 'nullable|boolean|default:false',
+            ]);
+            $validatedData['user_id'] = 1;
+            $validatedData['accepted_at'] = null;
+            $validatedData['isAccepted'] = false;
+
+
+            // Creazione di una nuova richiesta utilizzando i dati validati
+            $richiesta = Richiesta::create($validatedData);
 
             return response()->json([
                 "type" => "store",
                 "status" => "success",
-                "data" => [
-                    $data,
-                ]
+                "data" => $richiesta
             ]);
         } catch(\Exception $e) {
             return response()->json([
                 "type" => "store",
                 "state"=> "failed",
-                "error" => $e->getMessage()
+                "error" => $e->getMessage(),
+                "request" => $request->input()
             ]);
         }
     }
+
 
     /**
      * Update the specified resource in storage.

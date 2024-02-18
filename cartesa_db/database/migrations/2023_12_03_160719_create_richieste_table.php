@@ -24,7 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id'); //user that has accepted the request.
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->boolean('isAccepted')->default(False);
-            $table->datetime('accepted_at')->nullable;
+            $table->datetime('accepted_at')->nullable();
             $table->timestamps();
         });
     }
