@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RequestController;
+use App\Http\Controllers\RichiestaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +14,8 @@ use App\Http\Controllers\RequestController;
 |
 */
 
-Route::get('/', function () {
-    return view('test', );
-});
+// Route::get('/', function () {
+//     return view('test', );
+// });
 
-Route::resource("/request",RequestController::class);
+Route::resource("/request",RichiestaController::class);

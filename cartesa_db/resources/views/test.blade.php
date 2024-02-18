@@ -16,5 +16,12 @@
     <h1>
         test
     </h1>
+    <form method="POST" action="{{ route('request.store') }}">
+        @csrf
+        <input type="text" name="name" placeholder="Nome">
+        <input type="email" name="email" placeholder="Email">
+        <input type="password" name="password" placeholder="Password">
+        <button type="submit">Registrati</button>
+    </form>
 </body>
 </html>

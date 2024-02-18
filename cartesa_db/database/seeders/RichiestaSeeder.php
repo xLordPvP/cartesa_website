@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
-use Database\Factories\RequestFactory;
+
+use Database\Factories\RichiestaFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class RequestSeeder extends Seeder
+class RichiestaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +15,7 @@ class RequestSeeder extends Seeder
     public function run(): void
     {
         for( $i = 0; $i < 10; $i++ ) {
-            RequestFactory::new()->create();
+            RichiestaFactory::new()->create();
             }
     }
 }

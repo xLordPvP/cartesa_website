@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Request;
+use App\Models\Richiesta;
+use Illuminate\Http\Request;
+use Illuminate\Http\Request\input;
 
-class RequestController extends Controller
+class RichiestaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -12,9 +14,10 @@ class RequestController extends Controller
     public function index()
     {
         try{
-            $accepted = Request::all()->where("isAccepted",1);
-            $notAccepted = Request::all()->where("isAccepted",0);
-            $data = [[
+            $accepted = Richiesta::all()->where("isAccepted",1);
+            $notAccepted = Richiesta::all()->where("isAccepted",0);
+            $data = [
+                "type" => "index",
                 "state" => "sucsess",
                 "accepted" => [
                     "numberOfAccepted" => $accepted->count(),
@@ -24,10 +27,11 @@ class RequestController extends Controller
                     "numberOfNotAccepted" => $notAccepted->count(),
                     "data" => $notAccepted
                     ],
-            ]];
+            ];
             return view('test', ['data' => $data]);
         }catch(\Exception $e){
             return response()->json([
+                "type" => "index",
                 "state"=> "failed",
                 "error" => $e->getMessage()
             ]);
@@ -40,9 +44,20 @@ class RequestController extends Controller
     public function show(int $id)
     {
         try{
-            return view('test', ['name' => 'Alex']);
-        }catch(\Exception $e){
 
+            $data = Richiesta::where('id',$id)->first();
+            $data = [
+                "type" => "show",
+                "state" => "succsess",
+                "data" => $data
+            ];
+            return view('test', ["data"=>$data]);
+        }catch(\Exception $e){
+            return response()->json([
+                "type" => "show",
+                "state"=> "failed",
+                "error" => $e->getMessage()
+            ]);
         }
     }
 
@@ -51,10 +66,23 @@ class RequestController extends Controller
      */
     public function store(Request $request)
     {
-        try{
+        try {
+            $campo1 = $request->input();
 
-        }catch(\Exception $e){
 
+            return response()->json([
+                "type" => "store",
+                "status" => "success",
+                "data" => [
+                    $campo1,
+                ]
+            ]);
+        } catch(\Exception $e) {
+            return response()->json([
+                "type" => "store",
+                "state"=> "failed",
+                "error" => $e->getMessage()
+            ]);
         }
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\RequestController;
+use App\Http\Controllers\RichiestaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +19,6 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::resource("/request",RequestController::class);
+// Route::resource("/request",RequestController::class);
 
-Route::resource("/",RequestController::class);
+// Route::resource("/",RequestController::class);
