@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Richiesta;
 use Illuminate\Http\Request;
+use App\Models\Richiesta;
 use Illuminate\Http\Request\input;
 
 class RichiestaController extends Controller
@@ -67,14 +67,14 @@ class RichiestaController extends Controller
     public function store(Request $request)
     {
         try {
-            $campo1 = $request->input();
+            $data = $request->input();
 
 
             return response()->json([
                 "type" => "store",
                 "status" => "success",
                 "data" => [
-                    $campo1,
+                    $data,
                 ]
             ]);
         } catch(\Exception $e) {
