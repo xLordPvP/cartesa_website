@@ -49,7 +49,7 @@
 
     <!-- Campo budget -->
     <label for="budget">Budget:</label>
-    <input type="number" id="budget" name="budget">
+    <input type="number" step="0,01" id="budget" name="budget">
 
     <!-- Altri campi se necessario -->
 

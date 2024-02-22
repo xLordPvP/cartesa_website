@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('city');
             $table->integer('cap');
             $table->string('description');
-            $table->float('budget');
+            $table->decimal('budget',15,2);
             $table->unsignedBigInteger('user_id'); //user that has accepted the request.
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->boolean('isAccepted')->default(False);

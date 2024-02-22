@@ -19,3 +19,6 @@ use App\Http\Controllers\RichiestaController;
 // });
 
 Route::resource("/request",RichiestaController::class);
+Route::get("/", function(){
+    return view("welcome");
+});

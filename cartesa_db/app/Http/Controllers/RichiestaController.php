@@ -18,8 +18,6 @@ class RichiestaController extends Controller
             $accepted = Richiesta::all()->where("isAccepted",1);
             $notAccepted = Richiesta::all()->where("isAccepted",0);
             $data = [
-                "type" => "index",
-                "state" => "sucsess",
                 "accepted" => [
                     "numberOfAccepted" => $accepted->count(),
                     "data" => $accepted
@@ -29,7 +27,11 @@ class RichiestaController extends Controller
                     "data" => $notAccepted
                     ],
             ];
-            return view('test', ['data' => $data]);
+            return response()->json(([
+                "type" => "index",
+                "state" => "sucsess",
+                'data' => $data
+            ]));
         }catch(\Exception $e){
             return response()->json([
                 "type" => "index",
@@ -47,12 +49,13 @@ class RichiestaController extends Controller
         try{
 
             $data = Richiesta::where('id',$id)->first();
-            $data = [
+            
+            return response()->json(([
                 "type" => "show",
-                "state" => "succsess",
-                "data" => $data
-            ];
-            return view('test', ["data"=>$data]);
+                "state" => "sucsess",
+                'data' => $data
+            ]));
+            
         }catch(\Exception $e){
             return response()->json([
                 "type" => "show",
@@ -77,11 +80,7 @@ class RichiestaController extends Controller
                 'city' => 'nullable|string|max:255',
                 'cap' => 'nullable|string|max:10',
                 'description' => 'required|string|max:1024',
-                'budget' => 'required|integer',
-
-                // 'user_id' => 'nullable|default:null',
-                // 'accepted_at' => 'nullable|date|default:1',
-                // 'is_accepted' => 'nullable|boolean|default:false',
+                'budget' => 'required|numeric',
             ]);
             $validatedData['user_id'] = 1;
             $validatedData['accepted_at'] = null;
@@ -113,7 +112,7 @@ class RichiestaController extends Controller
     public function update(Request $request, string $id)
     {
         try{
-
+            
         }catch(\Exception $e){
 
         }
@@ -125,9 +124,23 @@ class RichiestaController extends Controller
     public function destroy(string $id)
     {
         try{
-
-        }catch(\Exception $e){
-
+            DB::beginTransaction();
+            $data = Richiesta::where('id', $id)->first();
+            $data->delete();
+            DB::commit();
+            
+            return response()->json([
+                "type" => "store",
+                "status" => "success",
+                "data" => $data
+            ]);
+        } catch(\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                "type" => "store",
+                "state"=> "failed",
+                "error" => $e->getMessage()
+            ]);
         }
     }
 }
